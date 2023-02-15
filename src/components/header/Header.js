@@ -2,8 +2,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styles from "./Header.module.scss";
+import { FaShoppingCart } from "react-icons/fa";
 const Header = () => {
-
   const logo = (
     <div className={styles.logo}>
       <Link to="/">
@@ -14,9 +14,37 @@ const Header = () => {
     </div>
   );
 
+  const cart = (
+    <span className={styles.cart}>
+      <Link to="/cart">
+        <FaShoppingCart size={20} />
+        <p>0</p>
+      </Link>
+    </span>
+  );
+
   return (
     <header>
-      <div className={styles.header}>{logo}</div>
+      <div className={styles.header}>
+        {logo}
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/contact">Contact Us</Link>
+            </li>
+          </ul>
+          <div className={styles["header-right"]}>
+            <span className={styles.links}>
+              <Link to="/login">Login</Link>
+              <Link to="/order-history">My Orders</Link>
+            </span>
+            {cart}
+          </div>
+        </nav>
+      </div>
     </header>
   );
 };
