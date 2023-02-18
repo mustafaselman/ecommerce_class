@@ -43,7 +43,7 @@
         // fazladan kullanım gereksizse atılabilir
         justify-content: space-between;
         list-style: none;
-  
+        // sol navda gösterilen logo sadece responsivede gösteriliyor.
         .logo-mobile {
           display: none;
         }
@@ -144,6 +144,7 @@
   
         ul {
           display: block;
+          //sol navda gösterilen logo
           .logo-mobile {
             display: flex;
             justify-content: space-between;
