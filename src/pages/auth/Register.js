@@ -23,7 +23,7 @@ const Register = () => {
         </span>
       </Card>
       <div className={styles.img}>
-        <img src={registerImg} alt="Login" width="400" />
+        <img src={registerImg} alt="Register" width="400" />
       </div>
     </section>
   );
