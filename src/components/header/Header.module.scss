@@ -230,7 +230,7 @@
     position: relative;
     color: var(--color-danger);
   }
-  
+  // active linklerin altındaki çizgi
   .active::after {
     content: "";
     position: absolute;

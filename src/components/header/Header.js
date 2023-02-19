@@ -1,6 +1,6 @@
 //// tüm linklerin olduğu başlık kısmı
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import styles from "./Header.module.scss";
 import { FaShoppingCart, FaTimes } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
@@ -36,6 +36,8 @@ const Header = () => {
       </Link>
     </span>
   );
+// nav içindeki linkler tıklandığında isactive true olur. Bizde bu durumu kullanarak bir class ekledikki seçilen link belli olsun
+  const activeLink = (({isActive})=> (isActive ? `${styles.active}` : ""))
 
   return (
     <header>
@@ -64,16 +66,16 @@ const Header = () => {
               <FaTimes size={22} color="#fff" onClick={hideMenu}/>
             </li>
             <li>
-              <Link to="/">Home</Link>
+              <NavLink to="/" className={activeLink}>Home</NavLink>
             </li>
             <li>
-              <Link to="/contact">Contact Us</Link>
+              <NavLink to="/contact" className={activeLink}>Contact Us</NavLink>
             </li>
           </ul>
           <div className={styles["header-right"]} onClick={hideMenu}>
             <span className={styles.links}>
-              <Link to="/login">Login</Link>
-              <Link to="/order-history">My Orders</Link>
+              <NavLink to="/login" className={activeLink}>Login</NavLink>
+              <NavLink to="/order-history" className={activeLink}>My Orders</NavLink>
             </span>
             {cart}
           </div>
