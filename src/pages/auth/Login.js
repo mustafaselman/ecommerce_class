@@ -1,22 +1,21 @@
 //// kayıtlı kullanıcılar için giriş sayfası
-import React from 'react'
-import styles from "./auth.module.scss"
-import loginImg from "../../assets/login.png"
-import { Link } from 'react-router-dom'
-import { FaGoogle } from "react-icons/fa"
-import Card from '../../components/card/Card'
+import React from "react";
+import styles from "./auth.module.scss";
+import loginImg from "../../assets/login.png";
+import { Link } from "react-router-dom";
+import { FaGoogle } from "react-icons/fa";
+import Card from "../../components/card/Card";
 const Login = () => {
   return (
     <section className={`container ${styles.auth}`}>
-      
       <div className={styles.img}>
-        <img src={loginImg} alt="Login" width="400"/>
+        <img src={loginImg} alt="Login" width="400" />
       </div>
-        <Card cardClass={styles.form}>
+      <Card cardClass={styles.form}>
         <h2>Login</h2>
         <form>
           <input type="text" placeholder="Email" required />
-          <input type="password" placeholder='Password' required />
+          <input type="password" placeholder="Password" required />
           {/* bu classlar index.css klasöründe olduğu için otomatik olarak etkilediği tüm childler kullanır. */}
           <button className="--btn --btn-primary --btn-block">Login</button>
           <div className={styles.links}>
@@ -24,16 +23,17 @@ const Login = () => {
           </div>
           <p>-- or --</p>
         </form>
-        <button className="--btn --btn-danger --btn-block"><FaGoogle color="#fff"/>Login With Google</button>
+        <button className="--btn --btn-danger --btn-block">
+          <FaGoogle color="#fff" />
+          Login With Google
+        </button>
         <span className={styles.register}>
           <p>Don't have an account</p>
           <Link to="/register">Register</Link>
         </span>
       </Card>
-      
-
     </section>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
