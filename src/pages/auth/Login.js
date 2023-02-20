@@ -5,6 +5,8 @@ import loginImg from "../../assets/login.png";
 import { Link } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import Card from "../../components/card/Card";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase/config";
 const Login = () => {
 
   // formdaki inputlara ait state ler
@@ -13,7 +15,18 @@ const Login = () => {
 
   const loginUser = (e) => {
     e.preventDefault()
-    console.log(email,password)
+
+    // veri tabanında kayıtlı kullanıcı girişi yapma
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+    
+    const user = userCredential.user;
+   
+    })
+    .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    });
   }
   return (
     <section className={`container ${styles.auth}`}>
