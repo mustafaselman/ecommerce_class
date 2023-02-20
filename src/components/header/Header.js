@@ -1,14 +1,18 @@
 //// tüm linklerin olduğu başlık kısmı
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
 import { FaShoppingCart, FaTimes } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
+import { toast } from "react-toastify";
+
 const Header = () => {
   // responsive de yan menüyü(nav) gizleme/gösterme için oluşturuldu
   const [showMenu, setShowMenu] = useState(false);
+
+  const navigate = useNavigate();
 
   // responsive yan menüyü açan hamburger butonu için açma kapama fonksiyonu oluşturuldu
   const toggleMenu = () => {
@@ -20,11 +24,13 @@ const Header = () => {
     setShowMenu(false);
   };
 
+  // kullanıcı çıkış işlemi için kullanılır.
   const logoutUser = () => {
     signOut(auth).then(() => {
-      // Sign-out successful.
+      toast.success("Logout successfully...")
+      navigate("/")
     }).catch((error) => {
-      // An error happened.
+      toast.error(error.message)
     });
   }
 
