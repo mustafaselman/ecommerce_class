@@ -4,6 +4,8 @@ import { Link, NavLink } from "react-router-dom";
 import styles from "./Header.module.scss";
 import { FaShoppingCart, FaTimes } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebase/config";
 const Header = () => {
   // responsive de yan menüyü(nav) gizleme/gösterme için oluşturuldu
   const [showMenu, setShowMenu] = useState(false);
@@ -17,6 +19,15 @@ const Header = () => {
   const hideMenu = () => {
     setShowMenu(false);
   };
+
+  const logoutUser = () => {
+    signOut(auth).then(() => {
+      // Sign-out successful.
+    }).catch((error) => {
+      // An error happened.
+    });
+  }
+
   const logo = (
     <div className={styles.logo}>
       <Link to="/">
@@ -83,6 +94,9 @@ const Header = () => {
               </NavLink>
               <NavLink to="/order-history" className={activeLink}>
                 My Orders
+              </NavLink>
+              <NavLink to="/" onClick={logoutUser}>
+                Logout
               </NavLink>
             </span>
             {cart}
