@@ -5,6 +5,8 @@ import registerImg from "../../assets/register.png";
 import Card from "../../components/card/Card";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../firebase/config";
 
 const Register = () => {
 
@@ -19,6 +21,21 @@ const Register = () => {
     if (password !== cPassword) {
       toast.error("Password do not match.")
     }
+    else {
+
+      // yeni kullanıcı kaydını veri tabanına yapar
+      createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+      const user = userCredential.user;
+      console.log(user)
+      })
+      .catch((error) => {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      
+      });
+    }
+
   }
   return (
     <section className={`container ${styles.auth}`}>
