@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import styles from "./auth.module.scss";
 import registerImg from "../../assets/register.png";
 import Card from "../../components/card/Card";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/config";
@@ -14,6 +14,8 @@ const Register = () => {
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
   const [cPassword,setCPassword] = useState("")
+
+  const navigate = useNavigate();
 
   // formdaki input değerlerini almak için kullanılacak.
   const registerUser = (e) => {
@@ -28,11 +30,11 @@ const Register = () => {
       .then((userCredential) => {
       const user = userCredential.user;
       console.log(user)
+      toast.success("Registration Successful...")
+      navigate("/login")
       })
       .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      
+      toast.error(error.message)
       });
     }
 
