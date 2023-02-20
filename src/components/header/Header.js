@@ -36,8 +36,8 @@ const Header = () => {
       </Link>
     </span>
   );
-// nav içindeki linkler tıklandığında isactive true olur. Bizde bu durumu kullanarak bir class ekledikki seçilen link belli olsun
-  const activeLink = (({isActive})=> (isActive ? `${styles.active}` : ""))
+  // nav içindeki linkler tıklandığında isactive true olur. Bizde bu durumu kullanarak bir class ekledikki seçilen link belli olsun
+  const activeLink = ({ isActive }) => (isActive ? `${styles.active}` : "");
 
   return (
     <header>
@@ -63,19 +63,27 @@ const Header = () => {
           <ul onClick={hideMenu}>
             <li className={styles["logo-mobile"]}>
               {logo}
-              <FaTimes size={22} color="#fff" onClick={hideMenu}/>
+              <FaTimes size={22} color="#fff" onClick={hideMenu} />
             </li>
             <li>
-              <NavLink to="/" className={activeLink}>Home</NavLink>
+              <NavLink to="/" className={activeLink}>
+                Home
+              </NavLink>
             </li>
             <li>
-              <NavLink to="/contact" className={activeLink}>Contact Us</NavLink>
+              <NavLink to="/contact" className={activeLink}>
+                Contact Us
+              </NavLink>
             </li>
           </ul>
           <div className={styles["header-right"]} onClick={hideMenu}>
             <span className={styles.links}>
-              <NavLink to="/login" className={activeLink}>Login</NavLink>
-              <NavLink to="/order-history" className={activeLink}>My Orders</NavLink>
+              <NavLink to="/login" className={activeLink}>
+                Login
+              </NavLink>
+              <NavLink to="/order-history" className={activeLink}>
+                My Orders
+              </NavLink>
             </span>
             {cart}
           </div>
