@@ -7,6 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/config";
+import Loader from "../../components/loader/Loader";
 
 const Register = () => {
 
@@ -14,6 +15,9 @@ const Register = () => {
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
   const [cPassword,setCPassword] = useState("")
+
+  // bekleme animasyonuna ait state
+  const [ isLoading, setIsLoading ] = useState(false)
 
   const navigate = useNavigate();
 
@@ -24,22 +28,26 @@ const Register = () => {
       toast.error("Password do not match.")
     }
     else {
-
+      setIsLoading(true)
       // yeni kullanıcı kaydını veri tabanına yapar
       createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
       const user = userCredential.user;
       console.log(user)
+      setIsLoading(false)
       toast.success("Registration Successful...")
       navigate("/login")
       })
       .catch((error) => {
+      setIsLoading(false)
       toast.error(error.message)
       });
     }
 
   }
   return (
+    <>
+    {isLoading && <Loader />}
     <section className={`container ${styles.auth}`}>
       <Card cardClass={styles.form}>
         <h2>Register</h2>
@@ -59,6 +67,7 @@ const Register = () => {
         <img src={registerImg} alt="Register" width="400" />
       </div>
     </section>
+    </>
   );
 };
 
