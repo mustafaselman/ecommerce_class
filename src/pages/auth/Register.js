@@ -4,6 +4,7 @@ import styles from "./auth.module.scss";
 import registerImg from "../../assets/register.png";
 import Card from "../../components/card/Card";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Register = () => {
 
@@ -15,7 +16,9 @@ const Register = () => {
   // formdaki input değerlerini almak için kullanılacak.
   const registerUser = (e) => {
     e.preventDefault()
-    console.log(email,password,cPassword)
+    if (password !== cPassword) {
+      toast.error("Password do not match.")
+    }
   }
   return (
     <section className={`container ${styles.auth}`}>
