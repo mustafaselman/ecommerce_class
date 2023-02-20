@@ -2,16 +2,19 @@
 import React, { useState } from "react";
 import styles from "./auth.module.scss";
 import loginImg from "../../assets/login.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import Card from "../../components/card/Card";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/config";
+import { toast } from "react-toastify";
 const Login = () => {
 
   // formdaki inputlara ait state ler
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
+
+  const navigate = useNavigate()
 
   const loginUser = (e) => {
     e.preventDefault()
@@ -21,11 +24,11 @@ const Login = () => {
     .then((userCredential) => {
     
     const user = userCredential.user;
-   
+    toast.success("Login Successful...")
+    navigate("/")
     })
     .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
+      toast.error(error.message)
     });
   }
   return (
