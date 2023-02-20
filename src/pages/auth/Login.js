@@ -8,30 +8,38 @@ import Card from "../../components/card/Card";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
+import Loader from "../../components/loader/Loader";
 const Login = () => {
 
   // formdaki inputlara ait state ler
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
 
+  // bekleme animasyonuna ait state
+  const [ isLoading, setIsLoading ] = useState(false)
+
   const navigate = useNavigate()
 
   const loginUser = (e) => {
     e.preventDefault()
-
+    setIsLoading(true)
+    
     // veri tabanında kayıtlı kullanıcı girişi yapma
     signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-    
+    setIsLoading(false)
     const user = userCredential.user;
     toast.success("Login Successful...")
     navigate("/")
     })
     .catch((error) => {
+      setIsLoading(false)
       toast.error(error.message)
     });
   }
   return (
+    <>
+    {isLoading && <Loader />}
     <section className={`container ${styles.auth}`}>
       <div className={styles.img}>
         <img src={loginImg} alt="Login" width="400" />
@@ -58,6 +66,7 @@ const Login = () => {
         </span>
       </Card>
     </section>
+    </>
   );
 };
 
