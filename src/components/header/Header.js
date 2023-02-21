@@ -1,10 +1,10 @@
 //// tüm linklerin olduğu başlık kısmı
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
 import { FaShoppingCart, FaTimes } from "react-icons/fa";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
-import { signOut } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
 
@@ -13,6 +13,22 @@ const Header = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   const navigate = useNavigate();
+
+  // giriş yapan kullanıcıyı sürekli gösterecektir.
+  useEffect(()=> {
+
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+       
+        const uid = user.uid;
+        console.log(user)
+
+      } else {
+        
+      }
+    });
+
+  },[])
 
   // responsive yan menüyü açan hamburger butonu için açma kapama fonksiyonu oluşturuldu
   const toggleMenu = () => {
