@@ -4,15 +4,24 @@ import styles from "./auth.module.scss"
 import resetImg from "../../assets/forgot.png"
 import Card from '../../components/card/Card'
 import { Link } from 'react-router-dom'
+import { sendPasswordResetEmail } from 'firebase/auth'
+import { auth } from '../../firebase/config'
+import { toast } from 'react-toastify'
 
 const Reset = () => {
 
   const [ email, setEmail ] = useState("")
 
   const resetPassword = (e) => {
-    e.preventDefault()
-    alert(email)
-}
+    e.preventDefault();
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        toast.success("Check your email for a reset link");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
 
   return (
     <section className={`container ${styles.auth}`}>
