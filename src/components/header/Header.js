@@ -8,51 +8,50 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { REMOVE_ACTIVE_USER, SET_ACTIVE_USER } from "../../redux/slice/authSlice";
+import {
+  REMOVE_ACTIVE_USER,
+  SET_ACTIVE_USER,
+} from "../../redux/slice/authSlice";
 
 const Header = () => {
   // responsive de yan menüyü(nav) gizleme/gösterme için oluşturuldu
   const [showMenu, setShowMenu] = useState(false);
 
   //giriş yapan kullanıcı ismini kaydeder
-  const [displayName, setDisplayName] = useState("")
+  const [displayName, setDisplayName] = useState("");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   // giriş yapan kullanıcıyı sürekli gösterecektir.
-  useEffect(()=> {
-
+  useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-       
-        if(user.displayName === null) {
-
+        if (user.displayName === null) {
           // burada kullanıcını adı yoksa emailden almak için email deki son @ işaretine kadar kesilip kaydedilir
-          const u1 = user.email.slice(0,user.email.lastIndexOf("@"));
+          const u1 = user.email.slice(0, user.email.lastIndexOf("@"));
           // ardından kesilen kısmının ilk harfi büyük diğerleri küçük olucak şekilde işlenir.
           const uName = u1.charAt(0).toUpperCase() + u1.slice(1);
           // sonra displayName olarak kaydedilir
-          setDisplayName(uName)
-        }
-        else {
-           setDisplayName(user.displayName)
+          setDisplayName(uName);
+        } else {
+          setDisplayName(user.displayName);
         }
 
         // giriş yapan kullanıcıyı redux a gönderiyor
-        dispatch(SET_ACTIVE_USER({
-          email: user.email,
-          userName: user.displayName ? user.displayName : displayName,
-          userID: user.uid
-        }))
-
+        dispatch(
+          SET_ACTIVE_USER({
+            email: user.email,
+            userName: user.displayName ? user.displayName : displayName,
+            userID: user.uid,
+          })
+        );
       } else {
-        setDisplayName("")
-        dispatch(REMOVE_ACTIVE_USER())
+        setDisplayName("");
+        dispatch(REMOVE_ACTIVE_USER());
       }
     });
-
-  },[dispatch, displayName])
+  }, [dispatch, displayName]);
 
   // responsive yan menüyü açan hamburger butonu için açma kapama fonksiyonu oluşturuldu
   const toggleMenu = () => {
@@ -66,13 +65,15 @@ const Header = () => {
 
   // kullanıcı çıkış işlemi için kullanılır.
   const logoutUser = () => {
-    signOut(auth).then(() => {
-      toast.success("Logout successfully...")
-      navigate("/")
-    }).catch((error) => {
-      toast.error(error.message)
-    });
-  }
+    signOut(auth)
+      .then(() => {
+        toast.success("Logout successfully...");
+        navigate("/");
+      })
+      .catch((error) => {
+        toast.error(error.message);
+      });
+  };
 
   const logo = (
     <div className={styles.logo}>
@@ -138,8 +139,8 @@ const Header = () => {
               <NavLink to="/login" className={activeLink}>
                 Login
               </NavLink>
-              <a href='#home' style={{ color: "#ff7722"}}>
-                <FaUserCircle size={16}/>
+              <a href="#home" style={{ color: "#ff7722" }}>
+                <FaUserCircle size={16} />
                 Hi, {displayName}
               </a>
               <NavLink to="/order-history" className={activeLink}>
