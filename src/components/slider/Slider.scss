@@ -89,6 +89,7 @@
     height: 2.5rem;
     cursor: pointer;
     position: absolute;
+    // y ekseninde ortalaması için top ve transform birlikte kullanıldı. top, arrow u %50 den sonra başlattı, transform, arrow un %50 sini yukarı aldı
     top: 50%;
     transform: translateY(-50%);
     z-index: 2;
@@ -98,10 +99,13 @@
     background: #fff;
   }
   
+  // sağdan 1.5 rem pay bırak
   .next {
     right: 1.5rem;
     color: orangered;
   }
+
+  // soldan 1.5 rem pay bırak
   .prev {
     left: 1.5rem;
     color: orangered;
