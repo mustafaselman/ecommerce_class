@@ -28,6 +28,7 @@
     height: 100%;
   }
   
+  // (class= slide -> class= current slide) olduğunda (opacity 0 -> 1) olacak 
   .content {
     position: absolute;
     text-align: center;
@@ -42,7 +43,9 @@
     flex-direction: column;
     transform: translateX(-50%);
     background: rgba(0, 0, 0, 0.4);
+    // keyframe lerle oluşturulan yukarı kayma efekti
     animation: slide-up 1s ease 0.5s;
+    // animasyon son değeri koruyacaktır.
     animation-fill-mode: forwards;
     //   visibility: hidden;
     h2 {
@@ -67,6 +70,7 @@
     }
   }
   
+  // content classın bir altındaki tüm elementler
   .content > * {
     color: #fff;
     margin-bottom: 1rem;
@@ -78,6 +82,7 @@
     transform: translateX(0);
   }
   
+  //slider geldiğinde içerik de gelecek
   .current .content {
     opacity: 1;
   }
