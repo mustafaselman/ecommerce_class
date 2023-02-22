@@ -26,14 +26,23 @@ const Header = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
        
-        const uid = user.uid;
-        setDisplayName(user.displayName)
-        console.log(user)
+        if(user.displayName === null) {
+
+          // burada kullanıcını adı yoksa emailden almak için email deki son @ işaretine kadar kesilip kaydedilir
+          const u1 = user.email.slice(0,user.email.lastIndexOf("@"));
+          // ardından kesilen kısmının ilk harfi büyük diğerleri küçük olucak şekilde işlenir.
+          const uName = u1.charAt(0).toUpperCase() + u1.slice(1);
+          // sonra displayName olarak kaydedilir
+          setDisplayName(uName)
+        }
+        else {
+           setDisplayName(user.displayName)
+        }
 
         // giriş yapan kullanıcıyı redux a gönderiyor
         dispatch(SET_ACTIVE_USER({
           email: user.email,
-          userName: user.displayName,
+          userName: user.displayName ? user.displayName : displayName,
           userID: user.uid
         }))
 
@@ -42,7 +51,7 @@ const Header = () => {
       }
     });
 
-  },[])
+  },[dispatch, displayName])
 
   // responsive yan menüyü açan hamburger butonu için açma kapama fonksiyonu oluşturuldu
   const toggleMenu = () => {
