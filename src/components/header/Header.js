@@ -28,12 +28,13 @@ const Header = () => {
        
         const uid = user.uid;
         setDisplayName(user.displayName)
+        console.log(user)
 
         // giriş yapan kullanıcıyı redux a gönderiyor
         dispatch(SET_ACTIVE_USER({
-          email: "",
-          userName: "",
-          userID: ""
+          email: user.email,
+          userName: user.displayName,
+          userID: user.uid
         }))
 
       } else {
