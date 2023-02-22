@@ -7,6 +7,8 @@ import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { SET_ACTIVE_USER } from "../../redux/slice/authSlice";
 
 const Header = () => {
   // responsive de yan menüyü(nav) gizleme/gösterme için oluşturuldu
@@ -16,6 +18,7 @@ const Header = () => {
   const [displayName, setDisplayName] = useState("")
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // giriş yapan kullanıcıyı sürekli gösterecektir.
   useEffect(()=> {
@@ -25,6 +28,13 @@ const Header = () => {
        
         const uid = user.uid;
         setDisplayName(user.displayName)
+
+        // giriş yapan kullanıcıyı redux a gönderiyor
+        dispatch(SET_ACTIVE_USER({
+          email: "",
+          userName: "",
+          userID: ""
+        }))
 
       } else {
         setDisplayName("")
