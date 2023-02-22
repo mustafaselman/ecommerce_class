@@ -8,11 +8,20 @@ const Slider = () => {
 
   const [currentSlide, setCurrentSlide] = useState(0)
 
+  // data genişliğimiz 4 tür fakat indexler 0,1,2,3 şeklindedir.
+  const slideLength = sliderData.length
+
+  // arrow right a bastığımızda sağa slide değişimi için kullanılır. eğer currentslide 3 ise bir sonraki 0 olacak yoksa 1 arttır
+  const nextSlide = () => {setCurrentSlide(currentSlide === slideLength - 1 ? 0 : currentSlide + 1)}
+
+  // arrow left e bastığımızda sola slide değişimi için kullanılır. eğer currentslide 0 ise bir sonraki 3 olacak yoksa 1 azalt
+  const prevSlide = () => {setCurrentSlide(currentSlide === 0 ? slideLength - 1 : currentSlide - 1)}
+
   return (
     <div className="slider">
       
-      <AiOutlineArrowLeft className="arrow prev" />
-      <AiOutlineArrowRight className="arrow next" />
+      <AiOutlineArrowLeft className="arrow prev" onClick={prevSlide}/>
+      <AiOutlineArrowRight className="arrow next" onClick={nextSlide}/>
 
       {sliderData.map((slide, index) =>
             {
