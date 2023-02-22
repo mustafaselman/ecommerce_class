@@ -8,7 +8,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { SET_ACTIVE_USER } from "../../redux/slice/authSlice";
+import { REMOVE_ACTIVE_USER, SET_ACTIVE_USER } from "../../redux/slice/authSlice";
 
 const Header = () => {
   // responsive de yan menüyü(nav) gizleme/gösterme için oluşturuldu
@@ -48,6 +48,7 @@ const Header = () => {
 
       } else {
         setDisplayName("")
+        dispatch(REMOVE_ACTIVE_USER())
       }
     });
 

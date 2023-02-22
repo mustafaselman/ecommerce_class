@@ -20,7 +20,7 @@ const authSlice = createSlice({
       state.email = email;
       state.userName = userName;
       state.userID = userID;
-      console.log(action.payload)
+      // console.log(action.payload)
     },
     // kullanıcı çıkış yaptığında reduxdaki bilgileri sıfırlamak için kullanacağız
     REMOVE_ACTIVE_USER(state,action) {
@@ -28,6 +28,7 @@ const authSlice = createSlice({
       state.email = null;
       state.userName = null;
       state.userID = null;
+      // console.log(state.isLoggedIn)
   }
     
   }
