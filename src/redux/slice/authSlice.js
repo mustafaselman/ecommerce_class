@@ -15,7 +15,11 @@ const authSlice = createSlice({
     
     // aktif kullanıcıyı kaydetmek için kullanacağız
     SET_ACTIVE_USER: (state,action) => {
-        console.log(action.payload)
+      const {email, userName, userID} = action.payload;
+      state.isLoggedIn = true;
+      state.email = email;
+      state.userName = userName;
+      state.userID = userID;
     }
     
   }
