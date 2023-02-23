@@ -13,6 +13,7 @@ import {
   SET_ACTIVE_USER,
 } from "../../redux/slice/authSlice";
 import { ShowOnLogin, ShowOnLogout } from "../hiddenLink/hiddenLink";
+import { AdminOnlyLink } from "../adminOnlyRoute/AdminOnlyRoute";
 
 const Header = () => {
   // responsive de yan menüyü(nav) gizleme/gösterme için oluşturuldu
@@ -124,6 +125,11 @@ const Header = () => {
               {logo}
               <FaTimes size={22} color="#fff" onClick={hideMenu} />
             </li>
+            <AdminOnlyLink>
+              <li>
+                <button className='--btn --btn-primary'>Admin</button>
+              </li>
+            </AdminOnlyLink>
             <li>
               <NavLink to="/" className={activeLink}>
                 Home
