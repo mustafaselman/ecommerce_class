@@ -11,7 +11,7 @@ const categories = [
 ];
 
 const AddProduct = () => {
-  
+
   const [product, setProduct] = useState({
     name: "",
     imageURL: "",
@@ -21,14 +21,23 @@ const AddProduct = () => {
     desc: "",
   });
 
-  const handleInputChange = (e) => {};
+  // input değerlerini name:value şeklinde dinamik olarak alıyor
+  const handleInputChange = (e) => {
+    const {name, value} = e.target;
+    setProduct({...product, [name]: value})
+  };
   const handleImageChange = (e) => {};
+
+  const addProduct = (e) => {
+    e.preventDefault();
+    console.log(product)
+  }
 
   return (
     <div className={styles.product}>
       <h2>Add New Product</h2>
       <Card cardClass={styles.card}>
-        <form>
+        <form onSubmit={addProduct}>
           <label>Product name:</label>
           <input
             type="text"
@@ -55,7 +64,7 @@ const AddProduct = () => {
             />
             <input
               type="text"
-              required
+              // required
               value={product.imageURL}
               placeholder="Image URL"
               name="imageURL"
