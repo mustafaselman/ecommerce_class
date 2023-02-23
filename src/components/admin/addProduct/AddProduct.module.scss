@@ -27,15 +27,13 @@
         border-radius: 3px;
         outline: none;
       }
-  
-      // textarea {
-      //   width: 100%;
-      // }
-  
+      
+      // resim yüklemede progress kısmının arka gri planını oluşturur. transparent border ile biraz daha genişlik saglanmıştır.
       .progress {
         background-color: #aaa;
         border: 1px solid transparent;
         border-radius: 10px;
+        // resim yüklemede progress kısmının mavi bölümü (ilerleyecek olan bölüm)
         .progress-bar {
           background-color: var(--light-blue);
           border: 1px solid transparent;
