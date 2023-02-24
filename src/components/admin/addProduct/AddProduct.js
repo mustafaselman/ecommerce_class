@@ -1,5 +1,7 @@
 //// admin panelindeki add product componenti
+import { ref, uploadBytesResumable } from "firebase/storage";
 import React, { useState } from "react";
+import { storage } from "../../../firebase/config";
 import Card from "../../card/Card";
 import styles from "./AddProduct.module.scss";
 
@@ -26,7 +28,12 @@ const AddProduct = () => {
     const {name, value} = e.target;
     setProduct({...product, [name]: value})
   };
-  const handleImageChange = (e) => {};
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]
+    // console.log(file)
+    const storageRef = ref(storage, `eshop/${Date.now()}${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+  };
 
   const addProduct = (e) => {
     e.preventDefault();
