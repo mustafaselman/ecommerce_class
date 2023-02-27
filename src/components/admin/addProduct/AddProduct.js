@@ -1,8 +1,9 @@
 //// admin panelindeki add product componenti
+import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useState } from "react";
 import { toast } from "react-toastify";
-import { storage } from "../../../firebase/config";
+import { db, storage } from "../../../firebase/config";
 import Card from "../../card/Card";
 import styles from "./AddProduct.module.scss";
 
@@ -57,6 +58,22 @@ const AddProduct = () => {
   const addProduct = (e) => {
     e.preventDefault();
     console.log(product)
+
+    try {
+      addDoc(collection(db, "products"), {
+        name: product.name,
+        imageURL: product.imageURL,
+        price: Number(product.price),
+        category: product.category,
+        brand: product.brand,
+        desc: product.desc,
+        createdAt: Timestamp.now().toDate(),
+      });
+      toast.success("Product uploaded successfully")
+    } 
+    catch (error) {
+      toast.error(error.message)
+    }
   }
 
   return (
