@@ -2,6 +2,7 @@
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db, storage } from "../../../firebase/config";
 import Card from "../../card/Card";
@@ -16,18 +17,23 @@ const categories = [
 ];
 
 const AddProduct = () => {
-
-  const [product, setProduct] = useState({
+  
+  const initialState = {
     name: "",
     imageURL: "",
     price: 0,
     category: "",
     brand: "",
     desc: "",
+  }
+  const [product, setProduct] = useState({
+    ...initialState
   });
 
   const [uploadProgress,setUploadProgress] = useState(0)
   const [isLoading,setIsLoading] = useState(false)
+
+  const navigate = useNavigate();
 
   // input değerlerini name:value şeklinde dinamik olarak alıyor
   const handleInputChange = (e) => {
@@ -73,7 +79,10 @@ const AddProduct = () => {
         createdAt: Timestamp.now().toDate(),
       });
       setIsLoading(false)
+      setUploadProgress(0)
+      setProduct({...initialState})
       toast.success("Product uploaded successfully")
+      navigate("/admin/all-products")
     } 
     catch (error) {
       setIsLoading(false)
