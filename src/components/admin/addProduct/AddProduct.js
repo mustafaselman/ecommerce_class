@@ -1,5 +1,5 @@
 //// admin panelindeki add product componenti
-import { ref, uploadBytesResumable } from "firebase/storage";
+import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useState } from "react";
 import { storage } from "../../../firebase/config";
 import Card from "../../card/Card";
@@ -33,6 +33,23 @@ const AddProduct = () => {
     // console.log(file)
     const storageRef = ref(storage, `eshop/${Date.now()}${file.name}`);
     const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on('state_changed', 
+    (snapshot) => {
+    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    console.log('Upload is ' + progress + '% done');
+   
+  }, 
+  (error) => {
+    
+  }, 
+  () => {
+    
+    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+      console.log('File available at', downloadURL);
+    });
+  }
+);
   };
 
   const addProduct = (e) => {
