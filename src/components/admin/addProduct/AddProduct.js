@@ -1,6 +1,7 @@
 //// admin panelindeki add product componenti
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { storage } from "../../../firebase/config";
 import Card from "../../card/Card";
 import styles from "./AddProduct.module.scss";
@@ -23,6 +24,8 @@ const AddProduct = () => {
     desc: "",
   });
 
+  const [uploadProgress,setUploadProgress] = useState(0)
+
   // input değerlerini name:value şeklinde dinamik olarak alıyor
   const handleInputChange = (e) => {
     const {name, value} = e.target;
@@ -37,16 +40,15 @@ const AddProduct = () => {
     uploadTask.on('state_changed', 
     (snapshot) => {
     const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-    console.log('Upload is ' + progress + '% done');
-   
+    setUploadProgress(progress)
   }, 
   (error) => {
-    
+    toast.error(error.message)
   }, 
   () => {
-    
     getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-      console.log('File available at', downloadURL);
+      setProduct({...product, imageURL: downloadURL})
+      toast.success("Image uploaded successfully.")
     });
   }
 );
