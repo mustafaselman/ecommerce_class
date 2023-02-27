@@ -75,11 +75,13 @@ const AddProduct = () => {
           />
           <label>Product image:</label>
           <Card cardClass={styles.group}>
-            <div className={styles.progress}>
-              <div className={styles["progress-bar"]} style={{ width: "50%" }}>
-                Uploading 50%
+            {uploadProgress === 0 ? null : (
+              <div className={styles.progress}>
+              <div className={styles["progress-bar"]} style={{width: `${uploadProgress}%`}}>
+                {uploadProgress < 100 ? `Uploading ${uploadProgress}` : `Upload Complete ${uploadProgress}%`}
               </div>
             </div>
+            )}
 
             <input
               type="file"
@@ -88,14 +90,16 @@ const AddProduct = () => {
               name="image"
               onChange={(e) => handleImageChange(e)}
             />
-            <input
-              type="text"
-              // required
-              value={product.imageURL}
-              placeholder="Image URL"
-              name="imageURL"
+            {product.imageURL === "" ? null : 
+              <input 
+              type="text" 
+              required 
+              value={product.imageURL} 
+              placeholder="Image URL" 
+              name="imageURL" 
               disabled
-            />
+              /> 
+            }
           </Card>
           <label>Product Price:</label>
           <input
