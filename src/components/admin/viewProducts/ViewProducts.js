@@ -1,13 +1,14 @@
 //// admin panelindeki allproducts componenti
-import { onSnapshot, orderBy, query } from 'firebase/firestore';
+import { deleteDoc, doc, onSnapshot, orderBy, query } from 'firebase/firestore';
 import { collection } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { db } from '../../../firebase/config';
+import { db, storage } from '../../../firebase/config';
 import Loader from '../../loader/Loader';
 import styles from "./ViewProducts.module.scss";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
+import { deleteObject, ref } from 'firebase/storage';
 
 const ViewProducts = () => {
 
@@ -37,13 +38,29 @@ const ViewProducts = () => {
         setProducts(allProducts);
         setIsLoading(false)
       })
-
     }
     catch(error) {
       setIsLoading(false)
       toast.error(error.message)
     }
   };
+
+  const deleteProduct = async(id, imageURL) =>
+  {
+    try
+    {
+      // firestore database den döküman silmek için kullanılır(products koleksiyonunun içindeki id si eşleşen döküman)
+      await deleteDoc(doc(db, "products", id));
+      // storage den dökümana bağlı resmi silmek için kullanılır.
+      const storageRef = ref(storage, imageURL);
+      await deleteObject(storageRef)
+      toast.success("Product deleted successfully.")
+    } 
+    catch (error)
+    {
+      toast.error(error.message)
+    }
+  }
 
   return (
     <>
@@ -91,7 +108,7 @@ const ViewProducts = () => {
                       <FaEdit size={20} color="green" />
                     </Link>
                     &nbsp;
-                    <FaTrashAlt size={18} color="red" />
+                    <FaTrashAlt size={18} color="red" onClick={() => deleteProduct(id, imageURL)} />
                   </td>
                 </tr>
               )
