@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import { toast } from "react-toastify";
 import { db, storage } from "../../../firebase/config";
 import Card from "../../card/Card";
+import Loader from "../../loader/Loader";
 import styles from "./AddProduct.module.scss";
 
 const categories = [
@@ -26,6 +27,7 @@ const AddProduct = () => {
   });
 
   const [uploadProgress,setUploadProgress] = useState(0)
+  const [isLoading,setIsLoading] = useState(false)
 
   // input değerlerini name:value şeklinde dinamik olarak alıyor
   const handleInputChange = (e) => {
@@ -57,7 +59,8 @@ const AddProduct = () => {
 
   const addProduct = (e) => {
     e.preventDefault();
-    console.log(product)
+    // console.log(product);
+    setIsLoading(true)
 
     try {
       addDoc(collection(db, "products"), {
@@ -69,14 +72,18 @@ const AddProduct = () => {
         desc: product.desc,
         createdAt: Timestamp.now().toDate(),
       });
+      setIsLoading(false)
       toast.success("Product uploaded successfully")
     } 
     catch (error) {
+      setIsLoading(false)
       toast.error(error.message)
     }
   }
 
   return (
+    <>
+    {isLoading && <Loader/>}
     <div className={styles.product}>
       <h2>Add New Product</h2>
       <Card cardClass={styles.card}>
@@ -166,6 +173,7 @@ const AddProduct = () => {
         </form>
       </Card>
     </div>
+    </>
   );
 };
 
