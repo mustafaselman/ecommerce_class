@@ -26,7 +26,7 @@ const Admin = () => {
           <Route path="all-products" element={<ViewProducts/>}/>
 
           {/* admin panelindeki add product componenti */}
-          <Route path="add-product" element={<AddProduct/>}/>
+          <Route path="add-product/:id" element={<AddProduct/>}/>
 
           {/* admin panelindeki orders componenti */}
           <Route path="orders" element={<Orders/>}/>
