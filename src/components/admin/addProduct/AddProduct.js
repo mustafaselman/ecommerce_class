@@ -2,9 +2,11 @@
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db, storage } from "../../../firebase/config";
+import { selectProducts } from "../../../redux/slice/productSlice";
 import Card from "../../card/Card";
 import Loader from "../../loader/Loader";
 import styles from "./AddProduct.module.scss";
@@ -20,6 +22,11 @@ const AddProduct = () => {
 
   const {id} = useParams();
   // console.log(id)
+  const products = useSelector(selectProducts)
+  // console.log(products)
+  // bu değişken useParamdaki id ile productSlice daki productların id sini karşılaştırır. id si eşit olan product u döndürür
+  const productEdit = products.find((item) => item.id === id)
+  // console.log(productEdit)
   
   const initialState = {
     name: "",
@@ -29,8 +36,11 @@ const AddProduct = () => {
     brand: "",
     desc: "",
   }
-  const [product, setProduct] = useState({
-    ...initialState
+
+  //product ilk çağrıldığında useParams id ye göre ya hepsi boş ya da product bilgilerini içerecek şekilde gelecek.
+  const [product, setProduct] = useState(() => {
+    const newState = detectForm(id,{...initialState},productEdit)
+    return newState
   });
 
   const [uploadProgress,setUploadProgress] = useState(0)

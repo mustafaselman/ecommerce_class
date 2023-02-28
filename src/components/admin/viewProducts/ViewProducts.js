@@ -42,7 +42,9 @@ const ViewProducts = () => {
         // console.log(allProducts);
         setProducts(allProducts);
         setIsLoading(false)
-        dispatch(STORE_PRODUCTS(allProducts))
+        dispatch(STORE_PRODUCTS({
+          products : allProducts,
+        }))
       })
     }
     catch(error) {
