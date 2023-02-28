@@ -2,7 +2,7 @@
 import { addDoc, collection, Timestamp } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { db, storage } from "../../../firebase/config";
 import Card from "../../card/Card";
@@ -17,6 +17,9 @@ const categories = [
 ];
 
 const AddProduct = () => {
+
+  const {id} = useParams();
+  // console.log(id)
   
   const initialState = {
     name: "",
@@ -34,6 +37,13 @@ const AddProduct = () => {
   const [isLoading,setIsLoading] = useState(false)
 
   const navigate = useNavigate();
+
+  function detectForm(id, f1, f2) {
+    if(id === "ADD") {
+      return f1;
+    }
+    return f2
+  }
 
   // input değerlerini name:value şeklinde dinamik olarak alıyor
   const handleInputChange = (e) => {
@@ -94,7 +104,7 @@ const AddProduct = () => {
     <>
     {isLoading && <Loader/>}
     <div className={styles.product}>
-      <h2>Add New Product</h2>
+      <h2>{detectForm(id, "Add New Product","Edit Product")}</h2>
       <Card cardClass={styles.card}>
         <form onSubmit={addProduct}>
           <label>Product name:</label>
@@ -178,7 +188,7 @@ const AddProduct = () => {
             cols="30"
             rows="10"
           ></textarea>
-          <button className="--btn --btn-primary">Save Product</button>
+          <button className='--btn --btn-primary'>{detectForm(id, "Save Product","Edit Product")}</button>
         </form>
       </Card>
     </div>
