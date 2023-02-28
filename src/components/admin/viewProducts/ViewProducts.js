@@ -10,11 +10,15 @@ import styles from "./ViewProducts.module.scss";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { deleteObject, ref } from 'firebase/storage';
 import Notiflix from 'notiflix';
+import { useDispatch } from 'react-redux';
+import { STORE_PRODUCTS } from '../../../redux/slice/productSlice';
 
 const ViewProducts = () => {
 
   const [products, setProducts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+
+  const dispatch = useDispatch();
 
   useEffect(()=> {
     getProducts();
@@ -38,6 +42,7 @@ const ViewProducts = () => {
         // console.log(allProducts);
         setProducts(allProducts);
         setIsLoading(false)
+        dispatch(STORE_PRODUCTS(allProducts))
       })
     }
     catch(error) {
