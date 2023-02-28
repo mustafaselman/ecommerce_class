@@ -9,6 +9,7 @@ import Loader from '../../loader/Loader';
 import styles from "./ViewProducts.module.scss";
 import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import { deleteObject, ref } from 'firebase/storage';
+import Notiflix from 'notiflix';
 
 const ViewProducts = () => {
 
@@ -44,6 +45,28 @@ const ViewProducts = () => {
       toast.error(error.message)
     }
   };
+
+  const confirmDelete = (id, imageURL) => {
+    Notiflix.Confirm.show(
+      'Delete Product!!!',
+      'You are about to delete this product?',
+      'Delete',
+      'Cancel',
+      function okCb() {
+        deleteProduct(id, imageURL)
+      },
+      function cancelCb() {
+        
+      },
+      {
+        width: '320px',
+        borderRadius: '3px',
+        titleColor: "orangered",
+        okButtonBackground: "orangered",
+        cssAnimationStyle: "zoom"
+      },
+    );
+  }
 
   const deleteProduct = async(id, imageURL) =>
   {
@@ -108,7 +131,7 @@ const ViewProducts = () => {
                       <FaEdit size={20} color="green" />
                     </Link>
                     &nbsp;
-                    <FaTrashAlt size={18} color="red" onClick={() => deleteProduct(id, imageURL)} />
+                    <FaTrashAlt size={18} color="red" onClick={() => confirmDelete(id, imageURL)} />
                   </td>
                 </tr>
               )
