@@ -3,10 +3,12 @@ import React, { useState } from 'react'
 import styles from "./ProductList.module.scss"
 import { BsFillGridFill } from "react-icons/bs"
 import { FaListAlt } from 'react-icons/fa'
+import Search from '../../search/Search'
 
 const ProductList = () => {
 
   const [ grid, setGrid ] = useState(true)
+  const [ search, setSearch ] = useState("")
 
   return (
     // product-list clasının arasında "-" olduğu için bu şekilde yazdık.
@@ -21,7 +23,7 @@ const ProductList = () => {
         </div>
         {/* Buraya Search ile ilgili özel component yapılacak çünkü Search kısmını admin panelinde de kullanacağız */}
         <div>
-          <p>Search</p>
+        <Search value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
         {/* Sort Products */}
         <div className={styles.sort}>
