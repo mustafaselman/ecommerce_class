@@ -4,8 +4,9 @@ import styles from "./ProductList.module.scss"
 import { BsFillGridFill } from "react-icons/bs"
 import { FaListAlt } from 'react-icons/fa'
 import Search from '../../search/Search'
+import ProductItem from '../productItem/ProductItem'
 
-const ProductList = () => {
+const ProductList = ({products}) => {
 
   const [ grid, setGrid ] = useState(true)
   const [ search, setSearch ] = useState("")
@@ -36,6 +37,23 @@ const ProductList = () => {
             <option value="z-a">Z - A</option>
           </select>
         </div>
+      </div>
+      <div className={grid ? `${styles.grid}` : `${styles.list}`}>
+        {products.lenght === 0 ? (
+          <p>No product found.</p>
+        ) : (
+          <>
+            {products.map((product) =>
+            {
+              return (
+                <div key={product.id}>
+                  {/* objeler için spread operatörü kullanılabilir. {...} ile, product objesinin içindeki tüm propertylere erişilebilir. Ayrıca tüm objeyi beraber kullanacağımız için de "product" ı ayrı istedik. Grid durumuna göre de component özelleşeceği için onu da aldık. */}
+                  <ProductItem {...product} grid={grid} product={product} />
+                </div>
+              )
+            })}
+          </>
+        )}
       </div>
     </div>
   )
