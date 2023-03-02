@@ -1,5 +1,6 @@
 .product-list {
     width: 100%;
+    // productların üstündeki layout-search-sort kısmı
     .top {
       width: 100%;
       border-bottom: 2px solid #ccc;
@@ -7,6 +8,7 @@
       justify-content: space-between;
       align-items: center;
       // flex-wrap: wrap;
+      // grid, products found kısmı
       .icons {
         display: flex;
         justify-content: center;
@@ -16,7 +18,7 @@
           cursor: pointer;
         }
       }
-  
+      //sort kısmı
       .sort {
         label {
           font-size: 1.4rem;
@@ -58,6 +60,8 @@
     //     outline: none;
     //   }
     // }
+
+    // productlar 800px altında tekli görünüme geçer
     @media screen and (max-width: 800px) {
       .top {
         flex-direction: column;
@@ -69,7 +73,8 @@
       }
     }
   }
-  
+
+  // productlar grid moduna geçer
   .grid {
     display: flex;
     justify-content: space-around;
