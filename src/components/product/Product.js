@@ -6,6 +6,7 @@ import { selectProducts, STORE_PRODUCTS } from '../../redux/slice/productSlice'
 import styles from "./Product.module.scss"
 import ProductFilter from './productFilter/ProductFilter'
 import ProductList from './productList/ProductList'
+import spinnerImg from "../../assets/spinner.gif"
 
 const Product = () => {
 
@@ -29,10 +30,10 @@ const Product = () => {
     <section>
       <div className={`container ${styles.product}`}>
         <aside className={styles.filter}>
-          <ProductFilter/> 
+          {isLoading ? null : <ProductFilter/>}
         </aside>
         <div className={styles.content}>
-          <ProductList products={products}/>
+          {isLoading ? (<img src={spinnerImg} alt="Loading.." style={{width: "50px"}} className="--center-all"/>) : (<ProductList products={products}/>)}
         </div>
       </div>
     </section>
