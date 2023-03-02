@@ -38,7 +38,7 @@ const ProductList = ({products}) => {
           </select>
         </div>
       </div>
-      <div className={grid ? `${styles.grid}` : `${styles.list}`}>
+      <div className={grid && `${styles.grid}`}>
         {products.lenght === 0 ? (
           <p>No product found.</p>
         ) : (
