@@ -1,15 +1,24 @@
 //// home sayfasındaki ürünler hakkında gösterim, arama, sıralama yapabildiğiniz kısımla beraber tüm ürün kartlarının sergilendiği yer. ürün kartları (productıtem) adlı komponentde işlenecektir.
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from "./ProductList.module.scss"
 import { BsFillGridFill } from "react-icons/bs"
 import { FaListAlt } from 'react-icons/fa'
 import Search from '../../search/Search'
 import ProductItem from '../productItem/ProductItem'
+import { useDispatch } from 'react-redux'
+import { FILTER_BY_SEARCH } from '../../../redux/slice/filterSlice'
 
 const ProductList = ({products}) => {
 
   const [ grid, setGrid ] = useState(true)
   const [ search, setSearch ] = useState("")
+
+  const dispatch = useDispatch();
+
+  useEffect(() =>
+  {
+    dispatch(FILTER_BY_SEARCH({ products, search }))
+  }, [ dispatch, products, search ])
 
   return (
     // product-list clasının arasında "-" olduğu için bu şekilde yazdık.
