@@ -29,6 +29,7 @@
     }
   }
   
+  //Product.js modülünde 700px altında 50% genişlik veriliyor. Ayrıca görünme koşula bağlanılıp butonla açılıp kapanıyor. Burada yazılan genişlik aslında 50% nin 100% ü .
   @media screen and (max-width: 700px) {
     .filter {
       .category button {
@@ -42,12 +43,14 @@
     }
   }
   
+  //aktif olan seçenekler için kenarda kırmızı şerit çıkarmak için kullanılır.
   .active {
     position: relative;
     // margin-bottom: 2px;
     padding-left: 1rem;
   }
   
+  // ekstra bir classa gerek kalmadan "active" classı aktif olunca kenara şerit ekleme işlemi yapılır.
   .active::before {
     content: "";
     position: absolute;

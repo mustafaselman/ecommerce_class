@@ -26,6 +26,7 @@
         }
       }
     }
+    // ekran 700px altında filter kısmı sola gizlenir. eğer "show" classı çalıştırılırsa genişlik 50% oalcak şekilde gösterilir.
     @media screen and (max-width: 700px) {
       .filter {
         width: 50%;
