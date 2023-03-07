@@ -6,16 +6,22 @@ import { FaListAlt } from 'react-icons/fa'
 import Search from '../../search/Search'
 import ProductItem from '../productItem/ProductItem'
 import { useDispatch, useSelector } from 'react-redux'
-import { FILTER_BY_SEARCH, selectFilteredProducts } from '../../../redux/slice/filterSlice'
+import { FILTER_BY_SEARCH, selectFilteredProducts, SORT_PRODUCTS } from '../../../redux/slice/filterSlice'
 
 const ProductList = ({products}) => {
 
   const [ grid, setGrid ] = useState(true)
   const [ search, setSearch ] = useState("")
+  const [sort,setSort] = useState("latest")
 
   const filteredProducts = useSelector(selectFilteredProducts)
 
   const dispatch = useDispatch();
+
+  useEffect(() =>
+  {
+    dispatch(SORT_PRODUCTS({ products, sort }))
+  }, [ dispatch, products, sort ])
 
   useEffect(() =>
   {
@@ -40,7 +46,7 @@ const ProductList = ({products}) => {
         {/* Sort Products */}
         <div className={styles.sort}>
           <label>Sort by:</label>
-          <select name="category" >
+          <select name="category" value={sort} onChange={(e) => setSort(e.target.value)}>
             <option value="latest">Latest</option>
             <option value="lowest-price">Lowest Price</option>
             <option value="highest-price">Highest Price</option>
