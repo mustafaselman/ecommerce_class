@@ -4,6 +4,7 @@
     overflow-x: auto;
   
     table {
+      // borderları birleştirmek için
       border-collapse: collapse;
       width: 100%;
       font-size: 1.4rem;
@@ -33,7 +34,7 @@
       tr {
         border-bottom: 1px solid #ccc;
       }
-  
+      // çift sayılar için
       tr:nth-child(even) {
         background-color: #eee;
       }
