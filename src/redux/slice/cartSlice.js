@@ -1,5 +1,6 @@
 ////sepetteki ürünlerin kaydını yöneten redux : carta ürün ekleme ve artırma, cartan ürün çıkarma ve azaltma, cartı temizleme, cart ürün sayısı , toplam fiyat işlemleri yürütülecektir. 
 import { createSlice } from '@reduxjs/toolkit'
+import { toast } from 'react-toastify';
 
 const initialState = {
   cartItems: localStorage.getItem("cartItems") ? JSON.parse(localStorage.getItem("cartItems")) : [],
@@ -12,8 +13,20 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     ADD_TO_CART(state,action) {
-      console.log(action.payload)
-      
+      // console.log(action.payload)
+      // eşleşme yaptığı elemanın indexini döndürür yoksa -1 döndürür
+      const productIndex = state.cartItems.findIndex((item) => item.id === action.payload.id)
+
+      if(productIndex >= 0) {
+          state.cartItems[productIndex].cartQuantity += 1;
+          toast.info(`${action.payload.name} increased by one`, {position:"top-left"})
+      } else {
+          const tempProduct = {...action.payload, cartQuantity: 1}
+          state.cartItems.push(tempProduct)
+          toast.success(`${action.payload.name} added to cart`, {position:"top-left"})
+      }
+        //stringify sıkıştırıp metne dönüştürüp kaydediyor.
+        localStorage.setItem("cartItems",JSON.stringify(state.cartItems))
   },
   }
 });
