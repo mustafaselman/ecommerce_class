@@ -1,8 +1,8 @@
 //// alışveriş sepeti (cart) sayfası
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { selectCartItems, selectCartTotalAmount, selectCartTotalQuantity } from '../../redux/slice/cartSlice'
+import { ADD_TO_CART, selectCartItems, selectCartTotalAmount, selectCartTotalQuantity } from '../../redux/slice/cartSlice'
 import styles from "./Cart.module.scss"
 import {FaTrashAlt} from "react-icons/fa"
 import Card from '../../components/card/Card'
@@ -12,6 +12,11 @@ const Cart = () => {
   const cartItems = useSelector(selectCartItems)
   const cartTotalAmount = useSelector(selectCartTotalAmount)
   const cartTotalQuantity = useSelector(selectCartTotalQuantity)
+  const dispatch = useDispatch()
+
+  const increaseCart = (cart) => {
+    dispatch(ADD_TO_CART(cart))
+  }
 
   return (
     <section>
@@ -61,7 +66,7 @@ const Cart = () => {
                             {cartQuantity}
                           </b>
                         </p>
-                        <button className='--btn'>+</button>
+                        <button className='--btn' onClick={()=>increaseCart(cart)}>+</button>
                       </div>
                     </td>
                     <td>{(price * cartQuantity).toFixed(2)}</td>
