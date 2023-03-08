@@ -2,7 +2,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { ADD_TO_CART, selectCartItems, selectCartTotalAmount, selectCartTotalQuantity } from '../../redux/slice/cartSlice'
+import { ADD_TO_CART, DECREASE_CART, selectCartItems, selectCartTotalAmount, selectCartTotalQuantity } from '../../redux/slice/cartSlice'
 import styles from "./Cart.module.scss"
 import {FaTrashAlt} from "react-icons/fa"
 import Card from '../../components/card/Card'
@@ -16,6 +16,9 @@ const Cart = () => {
 
   const increaseCart = (cart) => {
     dispatch(ADD_TO_CART(cart))
+  }
+  const decreaseCart = (cart) => {
+    dispatch(DECREASE_CART(cart))
   }
 
   return (
@@ -60,7 +63,7 @@ const Cart = () => {
                     <td>{price}</td>
                     <td>
                       <div className={styles.count}>
-                        <button className='--btn'>-</button>
+                      <button className='--btn' onClick={()=>decreaseCart(cart)}>-</button>
                         <p>
                           <b>
                             {cartQuantity}
