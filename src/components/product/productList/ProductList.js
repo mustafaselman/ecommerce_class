@@ -7,6 +7,7 @@ import Search from '../../search/Search'
 import ProductItem from '../productItem/ProductItem'
 import { useDispatch, useSelector } from 'react-redux'
 import { FILTER_BY_SEARCH, selectFilteredProducts, SORT_PRODUCTS } from '../../../redux/slice/filterSlice'
+import Pagination from '../../pagination/Pagination'
 
 const ProductList = ({products}) => {
 
@@ -15,6 +16,18 @@ const ProductList = ({products}) => {
   const [sort,setSort] = useState("latest")
 
   const filteredProducts = useSelector(selectFilteredProducts)
+
+  // şu anki sayfayı tutan state
+  const [currentPage,setCurrentPage] = useState(1)
+  //sayfa başına kaç ürün olacağını gösterir
+  const productsPerPage = 9
+
+  //sayfadaki son elemanın endexi (formülizasyon alttaki slice için oluşturuldu)
+  const indexOfLastProduct = currentPage * productsPerPage
+  //sayfadaki ilk elemanın endexi (formülizasyon alttaki slice için oluşturuldu)
+  const indexOfFirstProduct = ( currentPage - 1 ) * productsPerPage
+  //slice ilk elemanı alır,ikincisini almaz. Bu sebeple sayfada 9 eleman istiyorsak (0-9)(9-18)(18-27) şeklinde ilerlemeli
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct,indexOfLastProduct)
 
   const dispatch = useDispatch();
 
@@ -60,7 +73,7 @@ const ProductList = ({products}) => {
           <p>No product found.</p>
         ) : (
           <>
-            {filteredProducts.map((product) =>
+            {currentProducts.map((product) =>
             {
               return (
                 <div key={product.id}>
@@ -72,6 +85,7 @@ const ProductList = ({products}) => {
           </>
         )}
       </div>
+      <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} productsPerPage={productsPerPage} totalProducts={filteredProducts.length}/>
     </div>
   )
 }
