@@ -51,11 +51,20 @@ const cartSlice = createSlice({
       state.cartItems = []
       toast.info(`Cart cleared`, {position:"top-left"})
       localStorage.setItem("cartItems",JSON.stringify(state.cartItems))
-  },
+    },
+    CALCULATE_SUBTOTAL(state,action) {
+      let total = 0
+      state.cartItems.map((item) => {
+        const {price, cartQuantity} = item;
+        const cartItemAmount = price * cartQuantity;
+        return total += cartItemAmount;
+      });
+      state.cartTotalAmount = total
+    },
   }
 });
 
-export const {ADD_TO_CART,DECREASE_CART,REMOVE_FROM_CART,CLEAR_CART} = cartSlice.actions
+export const {ADD_TO_CART,DECREASE_CART,REMOVE_FROM_CART,CLEAR_CART,CALCULATE_SUBTOTAL} = cartSlice.actions
 
 export const selectCartItems = (state) => state.cart.cartItems;
 export const selectCartTotalQuantity = (state) => state.cart.cartTotalQuantity;
