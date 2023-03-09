@@ -7,13 +7,14 @@ import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   REMOVE_ACTIVE_USER,
   SET_ACTIVE_USER,
 } from "../../redux/slice/authSlice";
 import { ShowOnLogin, ShowOnLogout } from "../hiddenLink/hiddenLink";
 import { AdminOnlyLink } from "../adminOnlyRoute/AdminOnlyRoute";
+import { CALCULATE_TOTAL_QUANTITY, selectCartItems, selectCartTotalQuantity } from "../../redux/slice/cartSlice";
 
 const Header = () => {
   // responsive de yan menüyü(nav) gizleme/gösterme için oluşturuldu
@@ -22,8 +23,16 @@ const Header = () => {
   //giriş yapan kullanıcı ismini kaydeder
   const [displayName, setDisplayName] = useState("");
 
+  const cartTotalQuantity = useSelector(selectCartTotalQuantity)
+  const cartItems = useSelector(selectCartItems)
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  //sepetteki ürün değiştiğinde güncellenecek
+  useEffect(()=> {
+    dispatch(CALCULATE_TOTAL_QUANTITY())
+  },[dispatch,cartItems])
 
   // giriş yapan kullanıcıyı sürekli gösterecektir.
   useEffect(() => {
@@ -92,7 +101,7 @@ const Header = () => {
       <Link to="/cart">
         Cart
         <FaShoppingCart size={20} />
-        <p>0</p>
+        <p>{cartTotalQuantity}</p>
       </Link>
     </span>
   );
