@@ -13,6 +13,8 @@ import {
 import { auth } from "../../firebase/config";
 import { toast } from "react-toastify";
 import Loader from "../../components/loader/Loader";
+import { selectPreviousURL } from "../../redux/slice/cartSlice";
+import { useSelector } from "react-redux";
 const Login = () => {
   // formdaki inputlara ait state ler
   const [email, setEmail] = useState("");
@@ -21,7 +23,16 @@ const Login = () => {
   // bekleme animasyonuna ait state
   const [isLoading, setIsLoading] = useState(false);
 
+  const previosURL = useSelector(selectPreviousURL)
+
   const navigate = useNavigate();
+
+  const redirectUser = () => {
+    if(previosURL.includes("cart")) {
+       return navigate("/cart")
+    }
+    navigate("/")
+  };
 
   const loginUser = (e) => {
     e.preventDefault();
@@ -33,7 +44,7 @@ const Login = () => {
         setIsLoading(false);
         const user = userCredential.user;
         toast.success("Login Successful...");
-        navigate("/");
+        redirectUser()
       })
       .catch((error) => {
         setIsLoading(false);
@@ -47,7 +58,7 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
         toast.success("Login Succesfully");
-        navigate("/");
+        redirectUser()
       })
       .catch((error) => {
         toast.error(error.message);
