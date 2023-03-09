@@ -61,10 +61,18 @@ const cartSlice = createSlice({
       });
       state.cartTotalAmount = total
     },
+    CALCULATE_TOTAL_QUANTITY(state,action) {
+      let total = 0
+      state.cartItems.map((item) => {
+          const {cartQuantity} = item;
+          return total += cartQuantity;
+      });
+      state.cartTotalQuantity = total
+    },
   }
 });
 
-export const {ADD_TO_CART,DECREASE_CART,REMOVE_FROM_CART,CLEAR_CART,CALCULATE_SUBTOTAL} = cartSlice.actions
+export const {ADD_TO_CART,DECREASE_CART,REMOVE_FROM_CART,CLEAR_CART,CALCULATE_SUBTOTAL,CALCULATE_TOTAL_QUANTITY} = cartSlice.actions
 
 export const selectCartItems = (state) => state.cart.cartItems;
 export const selectCartTotalQuantity = (state) => state.cart.cartTotalQuantity;
