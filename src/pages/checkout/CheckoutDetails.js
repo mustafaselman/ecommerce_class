@@ -1,5 +1,6 @@
 //// bu sayfa myorders sayfasından checkout a tıkladığımızda gelen, checkoutdetails componentidir. içinde adres inputları ve checkoutsummary yer alır.
 import React, { useState } from 'react'
+import { CountryDropdown } from 'react-country-region-selector'
 import Card from '../../components/card/Card'
 import styles from "./CheckoutDetails.module.scss"
 
@@ -20,7 +21,7 @@ const CheckoutDetails = () => {
   const [billingAddress,setBillingAdress] = useState({...initialAddressState})
   
   const handleShipping = () => {
-  
+
   };
   const handleBilling = () => {
     
@@ -49,7 +50,12 @@ const CheckoutDetails = () => {
               <input type="text" placeholder="State" required name="state" value={shippingAddress.state} onChange={(e) => handleShipping(e)} />
               <label>Postal Code</label>
               <input type="text" placeholder="Postal Code" required name="postal_code" value={shippingAddress.postal_code} onChange={(e) => handleShipping(e)} />
-              {/* country kısmında tüm ülkeleri çekebileceğimiz bir modül kullanacağız */}
+              <CountryDropdown className={styles.select} valueType="short" value= {shippingAddress.country} onChange={(val)=> handleShipping({
+                target: {
+                  name: "country",
+                  value: val,
+                },
+              })}/>
               <label>Phone</label>
               <input type="text" placeholder="Phone" required name="phone" value={shippingAddress.phone} onChange={(e) => handleShipping(e)} />
             </Card>
