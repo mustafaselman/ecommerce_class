@@ -59,6 +59,30 @@ const CheckoutDetails = () => {
               <label>Phone</label>
               <input type="text" placeholder="Phone" required name="phone" value={shippingAddress.phone} onChange={(e) => handleShipping(e)} />
             </Card>
+            <Card cardClass={styles.card}>
+              <h3>Billing Address</h3>
+              <label>Recipient Name</label>
+              <input type="text" placeholder="Name" required name="name" value={billingAddress.name} onChange={(e) => handleBilling(e)} />
+              <label>Address line 1</label>
+              <input type="text" placeholder="Address line 1" required name="line1" value={billingAddress.line1} onChange={(e) => handleBilling(e)} />
+              <label>Address line 2</label>
+              <input type="text" placeholder="Address line 2" name="line2" value={billingAddress.line2} onChange={(e) => handleBilling(e)} />
+              <label>City</label>
+              <input type="text" placeholder="City" required name="city" value={billingAddress.city} onChange={(e) => handleBilling(e)} />
+              <label>State</label>
+              <input type="text" placeholder="State" required name="state" value={billingAddress.state} onChange={(e) => handleBilling(e)} />
+              <label>Postal Code</label>
+              <input type="text" placeholder="Postal Code" required name="postal_code" value={billingAddress.postal_code} onChange={(e) => handleBilling(e)} />
+              <CountryDropdown className={styles.select} valueType="short" value= {billingAddress.country} onChange={(val)=> handleBilling({
+                target: {
+                  name: "country",
+                  value: val,
+                },
+              })}/>
+              <label>Phone</label>
+              <input type="text" placeholder="Phone" required name="phone" value={billingAddress.phone} onChange={(e) => handleBilling(e)} />
+              <button type="submit" className="--btn --btn-primary">Proceed To Checkout</button>
+            </Card>
           </div>
         </form>
       </div>   
