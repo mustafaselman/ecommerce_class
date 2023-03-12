@@ -1,7 +1,10 @@
 //// bu sayfa myorders sayfasından checkout a tıkladığımızda gelen, checkoutdetails componentidir. içinde adres inputları ve checkoutsummary yer alır.
 import React, { useState } from 'react'
 import { CountryDropdown } from 'react-country-region-selector'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import Card from '../../components/card/Card'
+import { SAVE_BILLING_ADDRESS, SAVE_SHIPPING_ADDRESS } from '../../redux/slice/checkoutSlice'
 import styles from "./CheckoutDetails.module.scss"
 
 const initialAddressState = {
@@ -19,6 +22,9 @@ const CheckoutDetails = () => {
 
   const [shippingAddress,setShippingAdress] = useState({...initialAddressState})
   const [billingAddress,setBillingAdress] = useState({...initialAddressState})
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   
   const handleShipping = (event) => {
     const {name, value} = event.target
@@ -30,8 +36,11 @@ const CheckoutDetails = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(shippingAddress)
-    console.log(billingAddress)
+    // console.log(shippingAddress)
+    // console.log(billingAddress)
+    dispatch(SAVE_SHIPPING_ADDRESS(shippingAddress))
+    dispatch(SAVE_BILLING_ADDRESS(billingAddress))
+    navigate("/checkout")
   };
 
   return (
