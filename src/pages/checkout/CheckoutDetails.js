@@ -20,14 +20,18 @@ const CheckoutDetails = () => {
   const [shippingAddress,setShippingAdress] = useState({...initialAddressState})
   const [billingAddress,setBillingAdress] = useState({...initialAddressState})
   
-  const handleShipping = () => {
-
+  const handleShipping = (event) => {
+    const {name, value} = event.target
+    setShippingAdress({...shippingAddress, [name]: value})
   };
-  const handleBilling = () => {
-    
+  const handleBilling = (event) => {
+    const {name, value} = event.target
+    setBillingAdress({...billingAddress, [name]: value})
   };
-  const handleSubmit = () => {
-   
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(shippingAddress)
+    console.log(billingAddress)
   };
 
   return (
