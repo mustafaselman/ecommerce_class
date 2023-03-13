@@ -4,6 +4,7 @@ import { CountryDropdown } from 'react-country-region-selector'
 import { useDispatch } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
 import Card from '../../components/card/Card'
+import CheckoutSummary from '../../components/checkoutSummary/CheckoutSummary'
 import { SAVE_BILLING_ADDRESS, SAVE_SHIPPING_ADDRESS } from '../../redux/slice/checkoutSlice'
 import styles from "./CheckoutDetails.module.scss"
 
@@ -95,6 +96,11 @@ const CheckoutDetails = () => {
               <label>Phone</label>
               <input type="text" placeholder="Phone" required name="phone" value={billingAddress.phone} onChange={(e) => handleBilling(e)} />
               <button type="submit" className="--btn --btn-primary">Proceed To Checkout</button>
+            </Card>
+          </div>
+          <div>
+            <Card cardClass={styles.card}>
+              <CheckoutSummary/>
             </Card>
           </div>
         </form>
