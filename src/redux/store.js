@@ -5,6 +5,7 @@ import productReducer from "./slice/productSlice"
 import filterReducer from "./slice/filterSlice"
 import cartReducer from "./slice/cartSlice"
 import checkoutReducer from "./slice/checkoutSlice"
+import orderReducer from "./slice/orderSlice"
 
 // burası reucerlarımızı ekleyeceğimiz yer
 const rootReducer = combineReducers({
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     filter: filterReducer,
     cart: cartReducer,
     checkout: checkoutReducer,
+    orders: orderReducer
 });
 
 // burade reducerlar store a kaydediliyor.
