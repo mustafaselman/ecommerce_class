@@ -9,12 +9,15 @@
       font-size: 1.4rem;
   
       thead {
+        //style.css de kayıtlı
         border-top: 2px solid var(--light-blue);
         border-bottom: 2px solid var(--light-blue);
+        
       }
-  
+      //tr deki cursor:pointer dan başlıklar etkilenmesin diyee eklendi
       th {
         border: 1px solid #eee;
+        cursor:default;
       }
   
       th,
@@ -22,12 +25,7 @@
         vertical-align: top;
         text-align: left;
         padding: 8px;
-        &.icons {
-          > * {
-            margin-right: 5px;
-            cursor: pointer;
-          }
-        }
+        
       }
   
       tr {
