@@ -8,6 +8,9 @@ import { selectUserID, selectUserName } from "../../redux/slice/authSlice";
 import Card from "../card/Card";
 import styles from "./ReviewProducts.module.scss";
 import spinnerImg from "../../assets/spinner.gif";
+import { addDoc, collection, Timestamp } from "firebase/firestore";
+import { db } from "../../firebase/config";
+import { toast } from "react-toastify";
 
 const ReviewProducts = () => {
   const [rate, setRate] = useState(0);
@@ -27,7 +30,25 @@ const ReviewProducts = () => {
 
   const submitReview = (e) => {
     e.preventDefault();
-    console.log(rate, review);
+    const today = new Date();
+    const date = today.toDateString();
+    const reviewConfig = {
+      userID,
+      userName,
+      productID: id,
+      rate,
+      review,
+      reviewDate: date,
+      createdAt: Timestamp.now().toDate(),
+    };
+    try {
+      addDoc(collection(db, "reviews"), reviewConfig);
+      toast.success("Review submitted successfully");
+      setRate(0);
+      setReview("");
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
   return (
     <section>
