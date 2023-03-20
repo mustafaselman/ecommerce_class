@@ -32,7 +32,7 @@ const Admin = () => {
           <Route path="orders" element={<Orders/>}/>
 
           {/* admin panelindeki orders componentinin içindeki order statusa tıklayınce çıkam order details componenti */}
-          <Route path="order-details" element={<OrderDetails/>}/>
+          <Route path="order-details/:id" element={<OrderDetails/>}/>
 
         </Routes>
       </div>
