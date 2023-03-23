@@ -1,15 +1,37 @@
 //// admin panelindeki order componentinin içindeki order status kısmına tıklayınca çıkan order details komponentinin içindeki update status
+import { doc, Timestamp, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { db } from "../../../firebase/config";
 import Card from "../../card/Card";
 import Loader from "../../loader/Loader";
-import styles from "./ChangeOrderStatus.module.scss"
+import styles from "./ChangeOrderStatus.module.scss";
 
 const ChangeOrderStatus = ({order,id}) => {
 
   const [status, setStatus] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const editOrder = () => {}
+  const navigate = useNavigate();
+
+  const editOrder = (e,id) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const orderConfig = {
+      orderStatus: status,
+      editedAt: Timestamp.now().toDate(),
+    };
+    try {
+      updateDoc(doc(db, "orders", id), orderConfig);
+      setIsLoading(false);
+      toast.success("Order status changed successfully");
+      navigate("/admin/orders");
+    } catch (error) {
+      setIsLoading(false);
+      toast.error(error.message);
+    }
+  };
 
   return (
     <>
