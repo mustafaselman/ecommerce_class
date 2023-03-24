@@ -1,20 +1,33 @@
 //// contact us kısmı burada yazılır
-import React from 'react';
+import React, { useRef } from 'react';
 import { FaEnvelope, FaPhoneAlt, FaTwitter } from 'react-icons/fa'
 import Card from '../../components/card/Card'
 import styles from "./Contact.module.scss"
 import {GoLocation} from "react-icons/go"
+import { toast } from 'react-toastify';
+import emailjs from '@emailjs/browser';
 
 const Contact = () => {
 
-  const sendEmail = () => {}
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+    emailjs.sendForm('service_h2504bn', 'template_aup04zn', form.current, 'FY3KwWZcd58-rYMwj')
+      .then(() => {
+          toast.success("Message sent successfully")
+      }, (error) => {
+          toast.error(error.text)
+      });
+      e.target.reset();
+  }
 
   return (
     <section>
       <div className={`container ${styles.contact}`}>
         <h2>Contact Us</h2>
         <div className={styles.section}>
-          <form onSubmit={sendEmail}>
+          <form ref={form} onSubmit={sendEmail}>
             <Card cardClass={styles.card}>
               <label>Name:</label>
               <input type="text" name="user_name" placeholder="Full Name" required />
