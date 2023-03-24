@@ -19,7 +19,6 @@
           justify-content: flex-start;
           align-items: center;
           margin-bottom: 1rem;
-          a,
           p {
             margin-left: 5px;
           }
@@ -42,12 +41,8 @@
           font-weight: 500;
         }
         input[type="text"],
-        input[type="number"],
-        input[type="file"],
         input[type="email"],
-        select,
-        textarea,
-        input[type="password"] {
+        textarea {
           display: block;
           font-size: 1.6rem;
           font-weight: 300;
