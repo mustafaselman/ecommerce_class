@@ -15,6 +15,7 @@ import { selectProducts, STORE_PRODUCTS } from '../../../redux/slice/productSlic
 import useFetchCollection from '../../../customHooks/useFetchCollection';
 import { FILTER_BY_SEARCH, selectFilteredProducts } from '../../../redux/slice/filterSlice';
 import Search from '../../search/Search';
+import Pagination from '../../pagination/Pagination';
 
 const ViewProducts = () => {
 
@@ -25,6 +26,18 @@ const ViewProducts = () => {
   const products = useSelector(selectProducts);
 
   const filteredProducts = useSelector(selectFilteredProducts);
+
+  // şu anki sayfayı tutan state
+  const [currentPage,setCurrentPage] = useState(1)
+  //sayfa başına kaç ürün olacağını gösterir
+  const productsPerPage = 9
+
+  //sayfadaki son elemanın endexi (formülizasyon alttaki slice için oluşturuldu)
+  const indexOfLastProduct = currentPage * productsPerPage
+  //sayfadaki ilk elemanın endexi (formülizasyon alttaki slice için oluşturuldu)
+  const indexOfFirstProduct = ( currentPage - 1 ) * productsPerPage
+  //slice ilk elemanı alır,ikincisini almaz. Bu sebeple sayfada 9 eleman istiyorsak (0-9)(9-18)(18-27) şeklinde ilerlemeli
+  const currentProducts = filteredProducts.slice(indexOfFirstProduct,indexOfLastProduct)
 
   const dispatch = useDispatch();
 
@@ -106,7 +119,7 @@ const ViewProducts = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredProducts.map((product, index) =>
+            {currentProducts.map((product, index) =>
             {
               const { id, name, price, imageURL, category } = product;
               return (
@@ -140,6 +153,7 @@ const ViewProducts = () => {
           </tbody>
         </table>
       )}
+     <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} productsPerPage={productsPerPage} totalProducts={filteredProducts.length}/>
     </div>
   </>
 
